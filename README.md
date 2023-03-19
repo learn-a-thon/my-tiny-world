@@ -7,8 +7,8 @@
 ## Environment
 - `Language`: Java 17
 - `Framework`: SpringBoot(lastest version)
-- `Persistence Framework`: free(ex, JPA, Mybatis, JDBC, ...)
-- `DB`: free
+- `Persistence Framework`: JPA
+- `DB`: mysql or oracle , Reids
 
 
 ## Rules
@@ -26,7 +26,11 @@
 
 
 ## Requirements
-**요구사항 작성 필요**
+1. 쿠폰 발급 시스템
+    1. 대량의 발급요청 처리
+    2. 쿠폰 만료 처리
+    3. 선착순 인원 쿠폰 발급 기능
+2. 특정 상황에서의 슬랙 봇 연동을 통한 알림 기능 (추가 요구사항에 구현할지 고민이됩니다.) 
 
 
 ## How To Do It
