@@ -26,8 +26,11 @@
 
 
 ## Requirements
-**요구사항 작성 필요**
-
+* 은행 관리
+  * 계좌
+    * 생성, 수정(입금, 출금, 이체), 삭제, 조회
+  * 회원(jwt)
+    * 생성, 수정, 삭제, 조회
 
 ## How To Do It
 1. [메인 원격 저장소](https://github.com/learn-a-thon/my-tiny-world)의 main 브랜치 기준으로 **본인의 메인 브랜치(ex, gildong) 생성** 
