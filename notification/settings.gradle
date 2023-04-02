@@ -5,3 +5,5 @@ pluginManagement {
 	}
 }
 rootProject.name = 'notification'
+include 'core'
+include 'notifyer'
