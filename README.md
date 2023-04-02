@@ -26,8 +26,18 @@
 
 
 ## Requirements
-**요구사항 작성 필요**
+### 검색 API
+- 검색
+   - 검색 엔진(네이버, 다음, 구글) API 연동을 통한 검색 기능 지원
+   - 검색 결과 Sorting 기능
+   - 페이지네이션
+   - 자체적으로 제공하는 인기 검색어 조회 
+     - DB 활용 필요
 
+- 인증(jwt)
+  - 검색 기능을 활용하기 전 인증 토큰 발급 필요
+
+- Rate limit
 
 ## How To Do It
 1. [메인 원격 저장소](https://github.com/learn-a-thon/my-tiny-world)의 main 브랜치 기준으로 **본인의 메인 브랜치(ex, gildong) 생성** 
