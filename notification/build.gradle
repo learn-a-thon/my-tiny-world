@@ -43,3 +43,12 @@ repositories {
 ext {
 	set('snippetsDir', file("build/generated-snippets"))
 }
+
+project(':notifyer') {
+	bootJar { enabled = true }
+	jar { enabled = false }
+
+	dependencies {
+		compileOnly project(':core') // 컴파일 시 core project 로딩
+	}
+}
