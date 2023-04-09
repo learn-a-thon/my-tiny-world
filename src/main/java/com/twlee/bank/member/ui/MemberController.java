@@ -22,7 +22,7 @@ public class MemberController {
     public ResponseEntity<Void> save(@RequestBody MemberRequest memberRequest) {
         MemberResponse response = memberService.save(memberRequest);
         return ResponseEntity
-                .created(URI.create("/members/" + response.getId()))
+                .created(URI.create("/members/" + response.id()))
                 .build();
     }
 

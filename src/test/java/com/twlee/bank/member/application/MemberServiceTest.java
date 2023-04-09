@@ -28,9 +28,9 @@ class MemberServiceTest {
         MemberResponse member = memberService.save(홍길동);
 
         // then
-        assertThat(member.getName()).isEqualTo(홍길동.getName());
-        assertThat(member.getEmail()).isEqualTo(홍길동.getEmail());
-        assertThat(member.getPassword()).isEqualTo(홍길동.getPassword());
+        assertThat(member.name()).isEqualTo(홍길동.name());
+        assertThat(member.email()).isEqualTo(홍길동.email());
+        assertThat(member.password()).isEqualTo(홍길동.password());
     }
 
     @Test
@@ -39,11 +39,11 @@ class MemberServiceTest {
         MemberResponse member = memberService.save(new MemberRequest("홍길동", "gildong@gmail.com", "gildong123"));
 
         // when
-        MemberResponse findMember = memberService.getById(member.getId());
+        MemberResponse findMember = memberService.getById(member.id());
 
         // then
-        assertThat(findMember.getName()).isEqualTo(member.getName());
-        assertThat(findMember.getEmail()).isEqualTo(member.getEmail());
-        assertThat(findMember.getPassword()).isEqualTo(member.getPassword());
+        assertThat(findMember.name()).isEqualTo(member.name());
+        assertThat(findMember.email()).isEqualTo(member.email());
+        assertThat(findMember.password()).isEqualTo(member.password());
     }
 }
