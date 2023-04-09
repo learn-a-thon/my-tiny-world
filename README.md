@@ -8,7 +8,6 @@
 </p>
 
 ## 🍪 기능
-
 * VOD 검색
 * VOD 상세 정보 제공
     * 해당 VOD를 시청할 수 있는 플랫폼 정보를 제공
@@ -23,4 +22,11 @@
     * 저장된 목록에 따른 OTT 플랫폼 추천
 * 현재 구독중인 OTT 정보
     * 함께 구독중인 친구들 모아보기
+
+## 🍄 기술
+* Hexagonal Architecture 적용
+* Spring WebFlux & WebClient 적용
+
+## 🔌 외부 API
+* [TMDB api](https://developers.themoviedb.org/3/getting-started/introduction) 연동
     
