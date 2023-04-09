@@ -1,43 +1,23 @@
 # My Tiny World
 
-## Summary
-익숙해진 습관, 환경을 벗어나 작은 변화를 만들고 도전해보는 경험을 만든다.
-
-
 ## Environment
 - `Language`: Java 17
 - `Framework`: SpringBoot(lastest version)
-- `Persistence Framework`: free(ex, JPA, Mybatis, JDBC, ...)
+- `Persistence Framework`: JPA
 - `DB`: free
 
-
-## Rules
-- 특정 환경, 기술에 종속되지 않는 **확장 가능하고 유연한 애플리케이션**을 개발한다.
-- 스프링의 핵심 철학을 생각하며 스프링을 더 잘 쓰기 위한 방법이 뭔지 고민해본다.
-- [**객체 지향 생활 체조 원칙**](https://catsbi.oopy.io/bf003ff6-2912-4714-8ac2-44eeb7becc93)을 준수하기위해 노력한다.
-- 데이터 중심 프로그래밍이 아닌 **객체지향 프로그래밍**을 한다.
-- [**CQRS**](https://learn.microsoft.com/ko-kr/azure/architecture/patterns/cqrs)를 고려하며 개발한다.
-- 다른 개발자가 코드를 봤을때 쉽게 이해할 수 있도록 **클린코드**를 지향하며 개발한다.
-- Commit Convention에 정하고 **일관된 Commit Message를 작성**한다.
-- **테스트 코드**는 반드시 작성한다.(TDD는 선택 사항)
-    - 핵심 기능에 한해서 작성해도된다.
-- **API 문서화**(Swagger3, Rest Docs)를 한다.
-- 사용하고 있는 기술(라이브러리)이 어떤 특징, 장단점을 가지고 있는지 이해하고 사용한다.
-
-
 ## Requirements
-* 은행 관리
-  * 계좌
-    * 생성, 수정(입금, 출금, 이체), 삭제, 조회
-  * 회원(jwt)
-    * 생성, 수정, 삭제, 조회
+### 계좌(Account)
+- 회원은 계좌를 생성할 수 있다.
+- 회원은 계좌를 삭제할 수 있다.
+- 회원은 계좌 금액을 수정(입금, 출금)할 수 있다.
+    - 계좌가 수정되면 이력을 저장한다.
+        - 입출금 금액, 회원, 수정 시간
+    - 금액 이외의 정보는 수정할 수 없다.
+- 회원은 계좌를 조회할 수 있다.
+    - 계좌 정보 및 입출금 내역을 조회할 수 있다.
 
-## How To Do It
-1. [메인 원격 저장소](https://github.com/learn-a-thon/my-tiny-world)의 main 브랜치 기준으로 **본인의 메인 브랜치(ex, gildong) 생성** 
-    1) 메인 원격 저장소에는 개인의 메인 브랜치만 존재
-2. [메인 원격 저장소](https://github.com/learn-a-thon/my-tiny-world) fork
-3. fork된 **개인 원격 저장소**에서 개인 메인 브랜치(gildong) 기준으로 **기능 브랜치(ex, board-list)를 생성**하여 요구사항 구현 시작 
-    1) 브랜치 컨벤션을 자유롭게 정의
-4. 요구사항 구현이 완료된 경우 `(메인 원격 저장소)gildong <--- (개인 원격 저장소)board-list`로 PR(MR) 요청
-5. 구현된 내용이 **메인 원격 저장소**의 본인 메인 브랜치(gildong)에 Merge 된 후에 **개인 원격 저장소**의 개인 메인 브랜치(gildong)를 **메인 원격 저장소**의 개인 메인 브랜치 브랜치(gildong) 기준으로 rebase한 후에 다음 요구사항을 구현
-
+### 회원(Member)
+-  회원을 생성한다.
+-  회원을 삭제한다.
+    - 보유한 계좌(Account) 정보가 삭제된다.
