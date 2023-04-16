@@ -1,0 +1,5 @@
+tmdb:
+  api-key: 9dc752ab5d642bc51043640efd65219d
+  base-url: https://api.themoviedb.org/3
+  language: ko-KR
+  region: ko
