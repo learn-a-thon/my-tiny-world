@@ -23,4 +23,9 @@ public class InMemoryMemberRepository implements MemberRepository {
         Member member = stores.getOrDefault(id, null);
         return Optional.ofNullable(member);
     }
+
+    @Override
+    public Optional<Member> findByEmail(String email) {
+        return Optional.empty();
+    }
 }
