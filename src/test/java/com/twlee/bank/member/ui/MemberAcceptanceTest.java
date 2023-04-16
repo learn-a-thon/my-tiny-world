@@ -5,6 +5,9 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.twlee.bank.member.ui.MemberSteps.*;
 import static org.assertj.core.api.Assertions.assertThat;
