@@ -1,0 +1,8 @@
+POST http://localhost:8080/notify/test
+Content-Type: application/json
+
+// 복잡한 json 형태를 별도의 파일해서 사용할 수 있다.
+// https://jojoldu.tistory.com/266
+{
+  "text" : "테스트-노티"
+}
