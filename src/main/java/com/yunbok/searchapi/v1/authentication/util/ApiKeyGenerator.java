@@ -1,6 +1,6 @@
 package com.yunbok.searchapi.v1.authentication.util;
 
-import com.yunbok.searchapi.v1.authentication.exception.AuthenticationException;
+import com.yunbok.searchapi.v1.authentication.exception.ApiAuthenticationException;
 import com.yunbok.searchapi.v1.authentication.service.ApiKeyService;
 import com.yunbok.searchapi.v1.common.define.ResponseCode;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +42,7 @@ public class ApiKeyGenerator {
             }
             return hashBuilder.toString();
         } catch (NoSuchAlgorithmException e) {
-            throw new AuthenticationException(ResponseCode.SERVER_ERROR);
+            throw new ApiAuthenticationException(ResponseCode.SERVER_ERROR);
         }
     }
 

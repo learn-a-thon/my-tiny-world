@@ -9,8 +9,10 @@ import org.springframework.http.HttpStatus;
 public enum ResponseCode {
 
     SUCCESS(HttpStatus.OK, 200, "ok"),
+
     INVALID_REQUEST(HttpStatus.BAD_REQUEST, 400, "invalid request"),
     INVALID_USER_INFO(HttpStatus.BAD_REQUEST, 401, "invalid user info"),
+    UNAUTHORIZED(HttpStatus.UNAUTHORIZED, 402, "unauthorized"),
     SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 500, "server error");
 
     private final HttpStatus status;

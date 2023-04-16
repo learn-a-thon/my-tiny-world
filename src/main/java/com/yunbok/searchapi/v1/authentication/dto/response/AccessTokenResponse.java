@@ -13,17 +13,17 @@ public class AccessTokenResponse implements Response {
     private int code;
     private String message;
     private String accessToken;
-    private String expiredTime;
+    private long expiredTime;
     private final String tokenType = "Bearer";
 
-    private AccessTokenResponse(ResponseCode responseCode, String accessToken, String expiredTime) {
+    private AccessTokenResponse(ResponseCode responseCode, String accessToken, long expiredTime) {
         this.code = responseCode.getCode();
         this.message = responseCode.getMessage();
         this.accessToken = accessToken;
         this.expiredTime = expiredTime;
     }
 
-    public static AccessTokenResponse responseOf(String accessToken, String expiredTime) {
+    public static AccessTokenResponse responseOf(String accessToken, long expiredTime) {
         return new AccessTokenResponse(
                 ResponseCode.SUCCESS,
                 accessToken,

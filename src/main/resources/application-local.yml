@@ -12,4 +12,8 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
+
+jwt:
+  secret: aiQoVnMwIDHv7+PfR8LE9gSk1hjJfFiFZKj+szimCno=
+  expiration: 864000

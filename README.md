@@ -46,9 +46,14 @@
   
 - api key 발급 
   - api key는 32byte의 랜덤 문자열
+  - api key는 꼭 unique 해야함
+  - api key는 hash 되어 db에 저장
+
 - access token 발급
   - jwt token payload 
     - 사용자 권한, 사용자 ID 포함
+  - 보안상 이유로 POST 요청으로 처리
+  - api key를 발급 받은 사용인지 체크, api key가 유효한지 체크한 후 토큰 발급
 
 - Rate limit
 
