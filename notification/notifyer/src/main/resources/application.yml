@@ -5,9 +5,7 @@ spring:
     username: root
     password: root
 
-
 notify:
   slack:
     url: https://hooks.slack.com/services
     token-path: TTS9Q7GAC/B0519CMM2LV/SliX5SSbn6cM6HGN5latlQGb
-
