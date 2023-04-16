@@ -26,7 +26,7 @@ class AuthenticationAcceptanceTest extends AcceptanceTest {
         var tokenResponse = 토큰_생성_요청(EMAIL, PASSWORD);
         // then
         assertThat(tokenResponse.statusCode()).isEqualTo(HttpStatus.OK.value());
-        assertThat(saveResponse.jsonPath().getString("token")).isNotNull();
+        assertThat(tokenResponse.jsonPath().getString("token")).isNotNull();
     }
 
     /**
@@ -39,6 +39,6 @@ class AuthenticationAcceptanceTest extends AcceptanceTest {
         // when
         var tokenResponse = 토큰_생성_요청("whysoserious@anonymous.com", "kkk");
         // then
-        assertThat(tokenResponse.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(tokenResponse.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
     }
 }

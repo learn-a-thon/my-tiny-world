@@ -8,6 +8,8 @@ import com.twlee.bank.member.exception.MemberException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional(readOnly = true)
 public class MemberService {
@@ -31,6 +33,10 @@ public class MemberService {
 
     public MemberResponse getById(Long id) {
         return toResponse(findById(id));
+    }
+
+    public Optional<Member> findByEmail(String email) {
+        return memberRepository.findByEmail(email);
     }
 
     private Member findById(Long id) {
