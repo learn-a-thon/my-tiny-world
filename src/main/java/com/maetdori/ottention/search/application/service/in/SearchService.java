@@ -2,10 +2,12 @@ package com.maetdori.ottention.search.application.service.in;
 
 import com.maetdori.ottention.search.adapter.web.dto.SearchMovieRequest;
 import com.maetdori.ottention.search.application.port.in.SearchUseCase;
-import com.maetdori.ottention.search.domain.Movies;
+import com.maetdori.ottention.search.adapter.web.dto.SearchMovieResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @RequiredArgsConstructor
@@ -25,21 +27,24 @@ public class SearchService implements SearchUseCase {
     private String region;
 
     @Override
-    public Movies searchMovies(SearchMovieRequest searchMovieRequest) {
+    public SearchMovieResponse searchMovies(SearchMovieRequest searchMovieRequest) {
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("api_key", apiKey);
+        params.add("language", language);
+        params.add("region", region);
+        params.add("page", searchMovieRequest.getPage());
+        params.add("include_adult", searchMovieRequest.getIncludeAdult());
+        params.add("query", searchMovieRequest.getKeyword());
+        params.add("year", searchMovieRequest.getYear());
+        params.add("primary_release_year", searchMovieRequest.getPrimaryReleaseYear());
+
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path(SEARCH_URI + "/movie")
-                        .queryParam("api_key", apiKey)
-                        .queryParam("language", language)
-                        .queryParam("region", region)
-                        .queryParam("page", searchMovieRequest.getPage())
-                        .queryParam("include_adult", searchMovieRequest.getIncludeAdult())
-                        .queryParam("query", searchMovieRequest.getKeyword())
-                        .queryParam("year", searchMovieRequest.getYear())
-                        .queryParam("primary_release_year", searchMovieRequest.getPrimaryReleaseYear())
+                        .queryParams(params)
                         .build())
                 .retrieve()
-                .bodyToMono(Movies.class)
+                .bodyToMono(SearchMovieResponse.class)
                 .block();
     }
 }

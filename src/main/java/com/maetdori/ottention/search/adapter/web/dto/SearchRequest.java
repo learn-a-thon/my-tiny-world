@@ -8,14 +8,14 @@ import lombok.NonNull;
 public class SearchRequest {
 
     @NonNull
-    private Integer page;
+    private String page;
 
-    private Boolean includeAdult;
+    private String includeAdult;
 
     @NotBlank(message = "검색어를 입력해주세요.")
     private String keyword;
 
-    public SearchRequest(Integer page, Boolean includeAdult, String keyword) {
+    public SearchRequest(String page, String includeAdult, String keyword) {
         this.page = page;
         this.includeAdult = includeAdult;
         this.keyword = keyword;

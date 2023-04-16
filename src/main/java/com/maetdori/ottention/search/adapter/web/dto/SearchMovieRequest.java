@@ -4,10 +4,10 @@ import lombok.Getter;
 
 @Getter
 public class SearchMovieRequest extends SearchRequest {
-    private Integer year;
-    private Integer primaryReleaseYear;
+    private String year;
+    private String primaryReleaseYear;
 
-    public SearchMovieRequest(Integer page, Boolean includeAdult, String keyword, Integer year, Integer primaryReleaseYear) {
+    public SearchMovieRequest(String page, String includeAdult, String keyword, String year, String primaryReleaseYear) {
         super(page, includeAdult, keyword);
         this.year = year;
         this.primaryReleaseYear = primaryReleaseYear;

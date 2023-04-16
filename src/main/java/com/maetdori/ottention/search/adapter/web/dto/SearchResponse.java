@@ -1,4 +1,4 @@
-package com.maetdori.ottention.search.domain;
+package com.maetdori.ottention.search.adapter.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
