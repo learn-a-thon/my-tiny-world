@@ -7,3 +7,5 @@ pluginManagement {
 rootProject.name = 'notification'
 include 'notifyer'
 include 'core'
+include 'domain'
+//include ':notifyer', ':domain'
