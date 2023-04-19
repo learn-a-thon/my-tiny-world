@@ -2,4 +2,3 @@ notify:
   slack:
     url: https://hooks.slack.com/services
     token-path: TTS9Q7GAC/B0519CMM2LV/t7E6fQKOnzUfVfU9cpxdxyEf
-
