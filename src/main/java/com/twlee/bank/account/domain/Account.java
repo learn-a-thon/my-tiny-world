@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Account extends BaseTimeEntity {
@@ -48,11 +49,11 @@ public class Account extends BaseTimeEntity {
         this.accountDetails.add(AccountDetail.createDeposit(amount, message));
     }
 
-    public void withdrawal(BigDecimal amount) {
-        withdrawal(amount, "");
+    public void withdraw(BigDecimal amount) {
+        withdraw(amount, "");
     }
 
-    public void withdrawal(BigDecimal amount, String message) {
+    public void withdraw(BigDecimal amount, String message) {
         Cash withdrawalCash = new Cash(amount);
         if (this.cash.lessThan(withdrawalCash)) {
             throw new AccountException("보유한 잔액이 부족하여 출금을 실패하였습니다.");
@@ -79,5 +80,9 @@ public class Account extends BaseTimeEntity {
 
     public List<AccountDetail> getAccountDetails() {
         return accountDetails;
+    }
+
+    public boolean isOwner(Long memberId) {
+        return Objects.equals(this.memberId, memberId);
     }
 }

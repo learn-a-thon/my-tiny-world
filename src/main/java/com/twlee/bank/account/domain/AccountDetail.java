@@ -37,7 +37,7 @@ public class AccountDetail {
     }
 
     public static AccountDetail createWithdrawal(BigDecimal transactionAmount, String message) {
-        return new AccountDetail(TransactionType.WITHDRAWAL, new Cash(transactionAmount), message, LocalDateTime.now());
+        return new AccountDetail(TransactionType.WITHDRAW, new Cash(transactionAmount), message, LocalDateTime.now());
     }
 
     public BigDecimal getAmount() {

@@ -34,7 +34,7 @@ class AccountTest {
         Account account = 계좌_생성(1L);
         account.deposit(BigDecimal.valueOf(1_000));
 
-        account.withdrawal(BigDecimal.valueOf(500));
+        account.withdraw(BigDecimal.valueOf(500));
 
         assertThat(account.getCash()).isEqualTo(BigDecimal.valueOf(500));
         assertThat(account.getAccountDetails()).hasSize(2);
@@ -45,7 +45,7 @@ class AccountTest {
         Account account = 계좌_생성(1L);
 
         assertThrows(AccountException.class,
-                () -> account.withdrawal(BigDecimal.valueOf(1_000)));
+                () -> account.withdraw(BigDecimal.valueOf(1_000)));
     }
 
     private Account 계좌_생성(Long ownerId) {
