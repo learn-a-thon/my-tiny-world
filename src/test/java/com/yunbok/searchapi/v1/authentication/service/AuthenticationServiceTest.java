@@ -10,6 +10,8 @@ import com.yunbok.searchapi.v1.authentication.util.ApiKeyGenerator;
 import com.yunbok.searchapi.v1.authentication.entity.User;
 import com.yunbok.searchapi.v1.authentication.util.JwtTokenProvider;
 import com.yunbok.searchapi.v1.common.repository.UserRepository;
+import com.yunbok.searchapi.v1.authentication.util.ApiKeyUtil;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,6 +43,14 @@ public class AuthenticationServiceTest {
     @InjectMocks
     private AuthenticationService authenticationService;
 
+    @InjectMocks
+    private AuthenticationService authenticationService;
+
+    @BeforeAll
+    public void setup() {
+        mockStatic(ApiKeyUtil.class);
+    }
+
     @Test
     public void testGetApiKey() throws Exception {
         // given
@@ -55,6 +65,15 @@ public class AuthenticationServiceTest {
         when(apiKeyGenerator.generateApiKey()).thenReturn(apiKey);
         ApiKeyResponse response = authenticationService.getApiKey(request);
         verify(apiKeyRepository).save(refEq(ApiKey.save(user, apiKeyGenerator.getHashedApiKey(apiKey))));
+
+        when(userRepository.findByAccountAndPassword(account, password)).thenReturn(user);
+        when(ApiKeyUtil.generateApiKey()).thenReturn(apiKey);
+
+        ApiKeyRequest request = ApiKeyRequest.requestOf(account, password);
+
+        // when
+        ApiKeyResponse response = authenticationService.getApiKey(request);
+        verify(apiKeyRepository).save(refEq(ApiKey.save(user, ApiKeyUtil.getHashedApiKey(apiKey))));
 
         // then
         assertEquals(apiKey, response.getApiKey());

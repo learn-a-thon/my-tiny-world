@@ -26,7 +26,6 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.getApiKey(apiKeyRequest));
     }
 
-
     /**
      * Access Token 발급
      * @param apiKey

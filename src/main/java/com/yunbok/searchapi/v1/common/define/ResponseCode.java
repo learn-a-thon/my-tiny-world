@@ -18,6 +18,4 @@ public enum ResponseCode {
     private final HttpStatus status;
     private final int code;
     private final String message;
-
-
 }

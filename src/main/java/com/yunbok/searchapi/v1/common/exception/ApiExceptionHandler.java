@@ -1,6 +1,7 @@
 package com.yunbok.searchapi.v1.common.exception;
 
 import com.yunbok.searchapi.v1.authentication.exception.ApiAuthenticationException;
+import com.yunbok.searchapi.v1.authentication.exception.AuthenticationException;
 import com.yunbok.searchapi.v1.common.define.ResponseCode;
 import com.yunbok.searchapi.v1.common.dto.ErrorResponse;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -19,7 +20,7 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ErrorResponse> handleUnexpectedError(Exception e) {
+    public ResponseEntity<ErrorResponse> handleUnexpectedError() {
         return ResponseEntity.internalServerError()
                 .body(ErrorResponse.responseOf(ResponseCode.SERVER_ERROR));
     }
@@ -31,9 +32,9 @@ public class ApiExceptionHandler {
                 .body(ErrorResponse.responseOf(ResponseCode.INVALID_REQUEST));
     }
 
-    @ExceptionHandler(ApiAuthenticationException.class)
+    @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ErrorResponse> handleAuthenticationException(ApiAuthenticationException e) {
+    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException e) {
         return ResponseEntity.internalServerError()
                 .body(ErrorResponse.responseOf(ResponseCode.SERVER_ERROR, e.getMessage()));
     }
