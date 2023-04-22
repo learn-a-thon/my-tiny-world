@@ -27,6 +27,16 @@ class MemberAcceptanceTest extends AcceptanceTest {
     }
 
     @Test
+    void 중복된_이메일_정보로_회원_등록_요청하면_생성을_실패한다() {
+        // given
+        // when
+        var saveResponse = 회원_생성_요청(NAME, EMAIL, PASSWORD);
+        var saveResponse2 = 회원_생성_요청(NAME, EMAIL, PASSWORD);
+        // then
+        assertThat(saveResponse2.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
     void 회원_정보를_조회한다() {
         // given
         var saveResponse = 회원_생성_요청(NAME, EMAIL, PASSWORD);

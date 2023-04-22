@@ -1,5 +1,6 @@
 package com.twlee.bank.account.application;
 
+import com.twlee.bank.account.application.dto.AccountResponse;
 import com.twlee.bank.account.application.dto.TransactionRequest;
 import com.twlee.bank.account.domain.Account;
 import com.twlee.bank.account.domain.AccountNumber;
@@ -36,6 +37,12 @@ public class AccountService {
         return account.getAccountNumber();
     }
 
+    public AccountResponse get(String memberEmail, String accountNumber) {
+        Member member = getMemberByEmail(memberEmail);
+        Account account = getAccount(member.getId(), accountNumber);
+        return new AccountResponse(member.getName(), member.getEmail(), account.getAccountNumber());
+    }
+
     @Transactional
     public void deposit(String memberEmail, TransactionRequest transactionRequest) {
         Member member = getMemberByEmail(memberEmail);
@@ -62,7 +69,7 @@ public class AccountService {
     }
 
     private Account getAccount(Long memberId, String accountNumber) {
-        Account account = accountRepository.findByAccountNumber(accountNumber)
+        Account account = accountRepository.findByAccountNumber(new AccountNumber(accountNumber))
                 .orElseThrow(() -> new AccountException("존재하지 않는 계좌 정보입니다."));
         if (!account.isOwner(memberId)) {
             throw new AccountException("잘못된 접근입니다.");

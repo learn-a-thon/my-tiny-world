@@ -1,6 +1,7 @@
 package com.twlee.bank.account.ui;
 
 import com.twlee.bank.account.application.AccountService;
+import com.twlee.bank.account.application.dto.AccountResponse;
 import com.twlee.bank.account.application.dto.TransactionRequest;
 import com.twlee.bank.common.annotation.AuthenticateAccess;
 import com.twlee.bank.common.application.dto.AuthMember;
@@ -27,6 +28,12 @@ public class AccountController {
                 .build();
     }
 
+    @GetMapping("/{accountNumber}")
+    public ResponseEntity<AccountResponse> get(@AuthenticateAccess AuthMember authMember,
+                                               @PathVariable String accountNumber) {
+        return ResponseEntity.ok(accountService.get(authMember.getEmail(), accountNumber));
+    }
+
     @PostMapping("/deposit")
     public ResponseEntity<Void> deposit(@AuthenticateAccess AuthMember authMember,
                                         @RequestBody TransactionRequest transactionRequest) {
@@ -42,7 +49,8 @@ public class AccountController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> delete(@AuthenticateAccess AuthMember authMember, @RequestParam String accountNumber) {
+    public ResponseEntity<Void> delete(@AuthenticateAccess AuthMember authMember,
+                                       @RequestParam String accountNumber) {
         accountService.delete(authMember.getEmail(), accountNumber);
         return ResponseEntity.noContent().build();
     }

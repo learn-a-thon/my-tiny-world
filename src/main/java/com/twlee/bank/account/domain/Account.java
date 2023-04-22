@@ -30,6 +30,7 @@ public class Account extends BaseTimeEntity {
     private List<AccountDetail> accountDetails = new ArrayList<>();
 
     protected Account() {
+        this.cash = new Cash();
     }
 
     public Account(AccountNumber accountNumber, Long memberId) {
@@ -59,7 +60,7 @@ public class Account extends BaseTimeEntity {
             throw new AccountException("보유한 잔액이 부족하여 출금을 실패하였습니다.");
         }
         this.cash = this.cash.subtract(withdrawalCash);
-        this.accountDetails.add(AccountDetail.createWithdrawal(amount, message));
+        this.accountDetails.add(AccountDetail.createWithdraw(amount, message));
     }
 
     public void delete() {

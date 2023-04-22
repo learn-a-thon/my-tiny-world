@@ -31,7 +31,7 @@ public class AuthenticateArgumentResolver implements HandlerMethodArgumentResolv
                                   NativeWebRequest webRequest,
                                   WebDataBinderFactory binderFactory) throws Exception {
         AuthenticateAccess authenticateAccess = parameter.getParameterAnnotation(AuthenticateAccess.class);
-        if (authenticateAccess != null && authenticateAccess.required()) {
+        if (authenticateAccess != null && !authenticateAccess.required()) {
             return new AnonymousMember("anonymous@tinybank.com");
         }
         String authorization = webRequest.getHeader("Authorization");
