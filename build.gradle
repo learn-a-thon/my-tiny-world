@@ -29,6 +29,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+	// jwt
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	// jaxb-api(jdk11 이후부터 해당 의존성이 제외됨)
+	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
 	// rest docs
 	asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
