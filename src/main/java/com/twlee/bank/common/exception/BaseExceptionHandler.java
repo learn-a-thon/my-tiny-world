@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class BaseExceptionHandler {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<Void> handleIllegalArgsException(DataIntegrityViolationException e) {
+    public ResponseEntity<Void> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
         return ResponseEntity.badRequest().build();
     }
 

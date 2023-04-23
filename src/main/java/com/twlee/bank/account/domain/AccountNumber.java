@@ -19,7 +19,7 @@ public class AccountNumber implements Serializable {
         this(creator.create());
     }
 
-    private AccountNumber(String number) {
+    public AccountNumber(String number) {
         this.number = number;
     }
 

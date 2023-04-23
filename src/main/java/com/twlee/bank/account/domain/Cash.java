@@ -1,14 +1,16 @@
 package com.twlee.bank.account.domain;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.Access;
+import jakarta.persistence.AccessType;
 import jakarta.persistence.Embeddable;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
 @Embeddable
+@Access(AccessType.FIELD)
 public class Cash {
-    @Column(name = "amount")
+
     private BigDecimal amount;
 
     public Cash() {

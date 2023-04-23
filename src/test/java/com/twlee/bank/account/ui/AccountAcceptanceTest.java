@@ -10,9 +10,13 @@ import org.springframework.http.HttpStatus;
 
 import java.math.BigDecimal;
 
+import static com.twlee.bank.account.ui.AccountSteps.계좌_조회_요청;
+import static com.twlee.bank.member.ui.AuthenticationSteps.토큰_생성_요청;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AccountAcceptanceTest extends AcceptanceTest {
+
+    private String token = "";
 
     /**
      * Given 회원가입을 요청한다.
@@ -20,6 +24,8 @@ public class AccountAcceptanceTest extends AcceptanceTest {
     @BeforeEach
     void setUp() {
         var response = MemberSteps.회원_생성_요청("홍길동", "gildong@gmail.com", "1234");
+        var tokenResponse = 토큰_생성_요청("gildong@gmail.com", "1234");
+        this.token = tokenResponse.jsonPath().getString("token");
     }
 
     /**
@@ -29,8 +35,6 @@ public class AccountAcceptanceTest extends AcceptanceTest {
      */
     @Test
     void 인증된_회원은_계좌_생성_요청을_성공한다() {
-        String token = "";
-
         ExtractableResponse<Response> response = AccountSteps.계좌_생성_요청(token);
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
@@ -43,9 +47,7 @@ public class AccountAcceptanceTest extends AcceptanceTest {
      */
     @Test
     void 미인증_회원은_계좌_생성_요청을_실패한다() {
-        String token = "faketoken";
-
-        ExtractableResponse<Response> response = AccountSteps.계좌_생성_요청(token);
+        ExtractableResponse<Response> response = AccountSteps.계좌_생성_요청("faketoken");
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
     }
@@ -57,11 +59,11 @@ public class AccountAcceptanceTest extends AcceptanceTest {
      */
     @Test
     void 인증된_회원은_계좌_조회_요청을_성공한다() {
-        String token = "";
         ExtractableResponse<Response> saveResponse = AccountSteps.계좌_생성_요청(token);
-        String accountNumber = saveResponse.jsonPath().getString("accountNumber");
+        ExtractableResponse<Response> findResponse = 계좌_조회_요청(token, saveResponse);
+        String accountNumber = findResponse.jsonPath().getString("accountNumber");
 
-        ExtractableResponse<Response> response = AccountSteps.계좌_조회_요청(token, accountNumber);
+        ExtractableResponse<Response> response = 계좌_조회_요청(token, accountNumber);
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
@@ -73,10 +75,7 @@ public class AccountAcceptanceTest extends AcceptanceTest {
      */
     @Test
     void 미인증_회원은_계좌_조회_요청을_실패한다() {
-        String token = "faketoken";
-        String accountNumber = "fakeaccountnumber";
-
-        ExtractableResponse<Response> response = AccountSteps.계좌_조회_요청(token, accountNumber);
+        ExtractableResponse<Response> response = 계좌_조회_요청("faketoken", "fakeaccountnumber");
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
     }
@@ -88,15 +87,14 @@ public class AccountAcceptanceTest extends AcceptanceTest {
      */
     @Test
     void 인가되지_않은_계좌_조회_요청을_실패한다() {
-        String token = "";
         ExtractableResponse<Response> saveResponse = AccountSteps.계좌_생성_요청(token);
-        String accountNumber = saveResponse.jsonPath().getString("accountNumber");
+        ExtractableResponse<Response> findResponse = 계좌_조회_요청(token, saveResponse);
+        String accountNumber = findResponse.jsonPath().getString("accountNumber");
 
-        ExtractableResponse<Response> response = AccountSteps.계좌_조회_요청(token, accountNumber);
+        ExtractableResponse<Response> response = 계좌_조회_요청("faketoken", accountNumber);
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
     }
-
 
     /**
      * Given 회원 인증을 하고
@@ -106,9 +104,9 @@ public class AccountAcceptanceTest extends AcceptanceTest {
      */
     @Test
     void 계좌_입금_요청을_성공한다() {
-        String token = "";
         ExtractableResponse<Response> saveResponse = AccountSteps.계좌_생성_요청(token);
-        String accountNumber = saveResponse.jsonPath().getString("accountNumber");
+        ExtractableResponse<Response> findResponse = 계좌_조회_요청(token, saveResponse);
+        String accountNumber = findResponse.jsonPath().getString("accountNumber");
 
         ExtractableResponse<Response> response = AccountSteps.입금_요청(token, accountNumber, BigDecimal.valueOf(1_000));
 
@@ -139,16 +137,15 @@ public class AccountAcceptanceTest extends AcceptanceTest {
      */
     @Test
     void 계좌_출금_요청을_성공한다() {
-        String token = "faketoken";
         ExtractableResponse<Response> saveResponse = AccountSteps.계좌_생성_요청(token);
-        String accountNumber = saveResponse.jsonPath().getString("accountNumber");
+        ExtractableResponse<Response> findResponse = 계좌_조회_요청(token, saveResponse);
+        String accountNumber = findResponse.jsonPath().getString("accountNumber");
         ExtractableResponse<Response> depositResponse = AccountSteps.입금_요청(token, accountNumber, BigDecimal.valueOf(2_000));
 
         ExtractableResponse<Response> response = AccountSteps.입금_요청(token, accountNumber, BigDecimal.valueOf(1_000));
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
-
 
     /**
      * Given 통장에 500원 보유한 회원이
@@ -158,9 +155,9 @@ public class AccountAcceptanceTest extends AcceptanceTest {
      */
     @Test
     void 보유_잔액보다_더_많은_금액을_출금_요청하면_실패한다() {
-        String token = "";
         ExtractableResponse<Response> saveResponse = AccountSteps.계좌_생성_요청(token);
-        String accountNumber = saveResponse.jsonPath().getString("accountNumber");
+        ExtractableResponse<Response> findResponse = 계좌_조회_요청(token, saveResponse);
+        String accountNumber = findResponse.jsonPath().getString("accountNumber");
         ExtractableResponse<Response> depositResponse = AccountSteps.입금_요청(token, accountNumber, BigDecimal.valueOf(500));
 
         ExtractableResponse<Response> response = AccountSteps.출금_요청(token, accountNumber, BigDecimal.valueOf(1_000));
@@ -175,11 +172,11 @@ public class AccountAcceptanceTest extends AcceptanceTest {
      */
     @Test
     void 미인증_회원은_계좌_출금_요청을_실패한다() {
-        String token = "faketoken";
         ExtractableResponse<Response> saveResponse = AccountSteps.계좌_생성_요청(token);
-        String accountNumber = saveResponse.jsonPath().getString("accountNumber");
+        ExtractableResponse<Response> findResponse = 계좌_조회_요청(token, saveResponse);
+        String accountNumber = findResponse.jsonPath().getString("accountNumber");
 
-        ExtractableResponse<Response> response = AccountSteps.출금_요청(token, accountNumber, BigDecimal.valueOf(1_000));
+        ExtractableResponse<Response> response = AccountSteps.출금_요청("faketoken", accountNumber, BigDecimal.valueOf(1_000));
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
     }
