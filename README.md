@@ -34,6 +34,7 @@
    - 자체적으로 제공하는 인기 검색어 조회 
      - DB 활용 필요
 
+
 - 인증(jwt)
   - 검색 기능을 활용하기 전 인증 토큰 발급 필요
   - 인증 프로세스 
@@ -43,6 +44,17 @@
     - 2. 사용자는 Api Key를 활용하여 Jwt Token 발급을 요청하여 Jwt Token을 발급 받음 
     - 3. 사용자는 Jwt Token을 Authorization 헤더에 포함하여 원하는 요청을 보내고, 서버는 Token이 올바른지 체크함
     - 4. 만약 올바른 Token이라면 요청을 처리하고 정상적으로 응답함
+  
+- api key 발급 
+  - api key는 32byte의 랜덤 문자열
+  - api key는 꼭 unique 해야함
+  - api key는 hash 되어 db에 저장
+
+- access token 발급
+  - jwt token payload 
+    - 사용자 권한, 사용자 ID 포함
+  - 보안상 이유로 POST 요청으로 처리
+  - api key를 발급 받은 사용인지 체크, api key가 유효한지 체크한 후 토큰 발급
   - jwt token payload 
     - 사용자 권한, 사용자 ID 포함
 

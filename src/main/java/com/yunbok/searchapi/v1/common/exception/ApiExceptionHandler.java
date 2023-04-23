@@ -1,5 +1,6 @@
 package com.yunbok.searchapi.v1.common.exception;
 
+import com.yunbok.searchapi.v1.authentication.exception.ApiAuthenticationException;
 import com.yunbok.searchapi.v1.authentication.exception.AuthenticationException;
 import com.yunbok.searchapi.v1.common.define.ResponseCode;
 import com.yunbok.searchapi.v1.common.dto.ErrorResponse;
@@ -22,6 +23,13 @@ public class ApiExceptionHandler {
     public ResponseEntity<ErrorResponse> handleUnexpectedError() {
         return ResponseEntity.internalServerError()
                 .body(ErrorResponse.responseOf(ResponseCode.SERVER_ERROR));
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException e) {
+        return ResponseEntity.internalServerError()
+                .body(ErrorResponse.responseOf(ResponseCode.INVALID_REQUEST));
     }
 
     @ExceptionHandler(AuthenticationException.class)
