@@ -43,9 +43,6 @@ public class AuthenticationServiceTest {
     @InjectMocks
     private AuthenticationService authenticationService;
 
-    @InjectMocks
-    private AuthenticationService authenticationService;
-
     @BeforeAll
     public void setup() {
         mockStatic(ApiKeyUtil.class);
@@ -66,14 +63,8 @@ public class AuthenticationServiceTest {
         ApiKeyResponse response = authenticationService.getApiKey(request);
         verify(apiKeyRepository).save(refEq(ApiKey.save(user, apiKeyGenerator.getHashedApiKey(apiKey))));
 
-        when(userRepository.findByAccountAndPassword(account, password)).thenReturn(user);
+        when(userRepository.findByAccountAndPassword(account, password)).thenReturn(Optional.of(user));
         when(ApiKeyUtil.generateApiKey()).thenReturn(apiKey);
-
-        ApiKeyRequest request = ApiKeyRequest.requestOf(account, password);
-
-        // when
-        ApiKeyResponse response = authenticationService.getApiKey(request);
-        verify(apiKeyRepository).save(refEq(ApiKey.save(user, ApiKeyUtil.getHashedApiKey(apiKey))));
 
         // then
         assertEquals(apiKey, response.getApiKey());

@@ -9,11 +9,6 @@ import com.yunbok.searchapi.v1.authentication.exception.ApiAuthenticationExcepti
 import com.yunbok.searchapi.v1.authentication.repository.ApiKeyRepository;
 import com.yunbok.searchapi.v1.authentication.util.ApiKeyGenerator;
 import com.yunbok.searchapi.v1.authentication.util.JwtTokenProvider;
-import com.yunbok.searchapi.v1.authentication.dto.request.ApiKeyRequest;
-import com.yunbok.searchapi.v1.authentication.dto.response.ApiKeyResponse;
-import com.yunbok.searchapi.v1.authentication.entity.ApiKey;
-import com.yunbok.searchapi.v1.authentication.repository.ApiKeyRepository;
-import com.yunbok.searchapi.v1.authentication.util.ApiKeyUtil;
 import com.yunbok.searchapi.v1.common.define.ResponseCode;
 import com.yunbok.searchapi.v1.authentication.entity.User;
 import com.yunbok.searchapi.v1.common.exception.ApiClientException;
