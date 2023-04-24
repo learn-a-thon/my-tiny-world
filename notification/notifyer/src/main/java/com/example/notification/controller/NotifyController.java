@@ -3,12 +3,13 @@ package com.example.notification.controller;
 import com.example.notification.dto.NotifyRequest;
 import com.example.notification.dto.NotifyResponse;
 import com.example.notification.service.SlackAlarmService;
-import jakarta.annotation.PostConstruct;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
@@ -21,6 +22,6 @@ public class NotifyController {
     @PostMapping("/test")
     public ResponseEntity<NotifyResponse> testNotify(@RequestBody NotifyRequest notifyRequest) {
         slackAlarmService.send(notifyRequest);
-        return ResponseEntity.ok(NotifyResponse.of(notifyRequest.getText()));
+        return ResponseEntity.ok(NotifyResponse.of(notifyRequest.text()));
     }
 }
