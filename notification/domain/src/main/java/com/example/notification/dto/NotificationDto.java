@@ -12,12 +12,14 @@ public class NotificationDto {
     private Long id;
     private NotificationType notificationType;
     private SeverityLevel severityLevel;
+    private String message;
 
     @Builder
-    public NotificationDto(Long id, NotificationType notificationType, SeverityLevel severityLevel) {
+    public NotificationDto(Long id, NotificationType notificationType, SeverityLevel severityLevel, String message) {
         this.id = id;
         this.notificationType = notificationType;
         this.severityLevel = severityLevel;
+        this.message = message;
     }
 
     public Notification toEntity() {
@@ -27,6 +29,15 @@ public class NotificationDto {
                 .id(id)
                 .notificationType(notificationType)
                 .severityLevel(severityLevel)
+                .build();
+    }
+
+    public static NotificationDto of(Notification notification) {
+        return NotificationDto.builder()
+                .id(notification.getId())
+                .notificationType(notification.getNotificationType())
+                .severityLevel(notification.getSeverityLevel())
+                .message(notification.getMessage())
                 .build();
     }
 

@@ -3,12 +3,13 @@ package com.example.notification.entity;
 import com.example.notification.define.NotificationType;
 import com.example.notification.define.SeverityLevel;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
-
+@Getter
+@Setter
 @Entity
+@DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Notification extends BaseEntity {
 

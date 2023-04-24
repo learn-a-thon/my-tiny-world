@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum SeverityLevel implements CommonType {
+public enum SeverityLevel implements CommonType<String, String> {
     FATAL("FATAL", "치명적 오류"),
     ERROR("ERROR", "일반적 오류"),
     WARNING("WARNING", "경고"),
