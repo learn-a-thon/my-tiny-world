@@ -3,7 +3,6 @@ package com.example.notification.service;
 import com.example.notification.config.NotifyProperties;
 import com.example.notification.dto.NotifyRequest;
 import com.example.notification.dto.NotifyRequestEvent;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.event.TransactionPhase;
@@ -11,7 +10,6 @@ import org.springframework.transaction.event.TransactionalEventListener;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-@Getter
 @RequiredArgsConstructor
 public abstract class AbstractNotifyService implements NotifyService {
 

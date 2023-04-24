@@ -18,6 +18,7 @@ public class Notification extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SeverityLevel severityLevel;
 
+    @Column(length = 30)
     private String message;
 
     @Builder
