@@ -41,7 +41,7 @@ public class AccountService {
     public AccountResponse get(String memberEmail, String accountNumber) {
         Member member = getMemberByEmail(memberEmail);
         Account account = getMemberAccount(memberEmail, accountNumber);
-        return new AccountResponse(member.getName(), member.getEmail(), account.getAccountNumber());
+        return new AccountResponse(member.getName(), member.getEmail(), account.getAccountNumber(), account.getCash());
     }
 
     @Transactional
