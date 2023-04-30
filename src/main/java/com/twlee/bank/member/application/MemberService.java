@@ -21,6 +21,10 @@ public class MemberService {
 
     @Transactional
     public MemberResponse save(MemberRequest memberRequest) {
+        Optional<Member> duplicateMember = findByEmail(memberRequest.email());
+        if (duplicateMember.isPresent()) {
+            throw new MemberException("이미 사용중인 이메일입니다.");
+        }
         Member member = memberRepository.save(memberRequest.toEntity());
         return toResponse(member);
     }

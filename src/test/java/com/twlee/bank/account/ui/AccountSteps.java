@@ -38,7 +38,7 @@ public class AccountSteps {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .auth().oauth2(token)
                 .body(params)
-                .when().post("/accounts/withdrawal")
+                .when().post("/accounts/withdraw")
                 .then().log().all().extract();
     }
 
@@ -47,6 +47,16 @@ public class AccountSteps {
         params.put("accountNumber", accountNumber);
         params.put("amount", amount);
         return params;
+    }
+
+    public static ExtractableResponse<Response> 계좌_조회_요청(String token, ExtractableResponse<Response> createdResponse) {
+        String uri = createdResponse.header("Location");
+        return RestAssured
+                .given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .auth().oauth2(token)
+                .when().get(uri)
+                .then().log().all().extract();
     }
 
     public static ExtractableResponse<Response> 계좌_조회_요청(String token, String accountNumber) {

@@ -1,4 +1,4 @@
-package com.twlee.bank.member.exception;
+package com.twlee.bank.account.exception;
 
 import com.twlee.bank.common.exception.BaseExceptionHandler;
 import org.springframework.http.ResponseEntity;
@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class MemberExceptionHandler extends BaseExceptionHandler {
+public class AccountExceptionHandler extends BaseExceptionHandler {
 
-    @ExceptionHandler(MemberException.class)
-    public ResponseEntity<Void> handleMemberException(MemberException e) {
+    @ExceptionHandler(AccountException.class)
+    public ResponseEntity<Void> handleAccountException(AccountException e) {
         return ResponseEntity.badRequest().build();
     }
 }
