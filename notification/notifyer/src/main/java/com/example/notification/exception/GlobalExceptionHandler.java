@@ -17,31 +17,31 @@ import java.sql.SQLSyntaxErrorException;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler
-    private ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException e) {
+    private ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException e) {
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(httpStatus).body(getErrorResponse(httpStatus, e));
     }
 
     @ExceptionHandler
-    private ResponseEntity<?> handleRuntimeException(RuntimeException e) {
+    private ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException e) {
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         return ResponseEntity.status(httpStatus).body(getErrorResponse(httpStatus, e));
     }
 
     @ExceptionHandler
-    private ResponseEntity<?> handleSQLSyntaxErroException(SQLSyntaxErrorException e) {
+    private ResponseEntity<ErrorResponse> handleSQLSyntaxErroException(SQLSyntaxErrorException e) {
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         return ResponseEntity.status(httpStatus).body(getErrorResponse(httpStatus, e));
     }
 
     @ExceptionHandler
-    private ResponseEntity<?> handleInvalidDataAccessException(InvalidDataAccessResourceUsageException e) {
+    private ResponseEntity<ErrorResponse> handleInvalidDataAccessException(InvalidDataAccessResourceUsageException e) {
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         return ResponseEntity.status(httpStatus).body(getErrorResponse(httpStatus, e));
     }
 
     @ExceptionHandler
-    private ResponseEntity<?> handleNotFoundNotificationException(NotFoundNotificationException e) {
+    private ResponseEntity<ErrorResponse> handleNotFoundNotificationException(NotFoundNotificationException e) {
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(httpStatus).body(getErrorResponse(httpStatus, e));
     }

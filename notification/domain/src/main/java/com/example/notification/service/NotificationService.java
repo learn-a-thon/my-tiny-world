@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,17 +30,12 @@ public class NotificationService {
         return NotificationDto.of(notification);
     }
 
+    @Transactional
     public NotificationDto update(Long id, NotificationDto notificationDto) {
         Notification notification = notificationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundNotificationException(id));
 
-        notification.setNotificationType(notificationDto.getNotificationType());
-        notification.setSeverityLevel(notificationDto.getSeverityLevel());
-        notification.setMessage(notificationDto.getMessage());
-
-        Notification updateNotification = notificationRepository.save(notification);
-
-        return NotificationDto.of(updateNotification);
+        return NotificationDto.of(notification.updateNotificationInfo(notificationDto));
     }
 
     public void deleteById(Long id) {
