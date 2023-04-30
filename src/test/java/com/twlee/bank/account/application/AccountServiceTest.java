@@ -22,6 +22,8 @@ class AccountServiceTest {
     private MemberRepository memberRepository;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private AccountQueryService accountQueryService;
 
     String EMAIL = "gildong@bank.com";
     String ACCOUNT_NUMBER;
@@ -53,8 +55,8 @@ class AccountServiceTest {
         countDownLatch.await();
 
         // then
-        AccountResponse accountResponse = accountService.get(EMAIL, ACCOUNT_NUMBER);
-        assertEquals(BigDecimal.valueOf(5000D), accountResponse.cash());
+        AccountResponse accountResponse = accountQueryService.get(EMAIL, ACCOUNT_NUMBER);
+        assertEquals(BigDecimal.valueOf(5000), accountResponse.cash());
     }
 
     private void run(String accountNumber, BigDecimal amount) {

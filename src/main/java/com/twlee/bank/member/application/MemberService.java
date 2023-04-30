@@ -1,5 +1,6 @@
 package com.twlee.bank.member.application;
 
+import com.twlee.bank.account.exception.AccountException;
 import com.twlee.bank.member.application.dto.MemberRequest;
 import com.twlee.bank.member.application.dto.MemberResponse;
 import com.twlee.bank.member.domain.Member;
@@ -41,6 +42,11 @@ public class MemberService {
 
     public Optional<Member> findByEmail(String email) {
         return memberRepository.findByEmail(email);
+    }
+
+    public Member getMemberByEmail(String memberEmail) {
+        return memberRepository.findByEmail(memberEmail)
+                .orElseThrow(() -> new AccountException("존재하지 않는 회원 정보입니다."));
     }
 
     private Member findById(Long id) {

@@ -51,7 +51,7 @@ public class AccountTransferAcceptanceTest extends AcceptanceTest {
         //then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.jsonPath().getString("accountNumber")).isEqualTo(홍길동_계좌번호);
-        assertThat(response.jsonPath().getObject("cash", BigDecimal.class)).isEqualTo(BigDecimal.valueOf(4_000.0));
+        assertThat(response.jsonPath().getObject("cash", BigDecimal.class)).isEqualTo(BigDecimal.valueOf(4_000));
     }
 
     /**
