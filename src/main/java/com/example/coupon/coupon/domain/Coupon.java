@@ -12,6 +12,7 @@ import java.util.Random;
 
 @Getter
 @NoArgsConstructor
+@Entity
 public class Coupon {
     @Id
     private Long couponNo;
@@ -24,8 +25,24 @@ public class Coupon {
         this.serial = serial;
     }
 
+    public static String createSerial() {
+        int leftLimit = 97;
+        int rightLimit = 122;
+        int targetStringLength = 4;
+        Random random = new Random();
+        StringBuilder generatedString = new StringBuilder(random.ints(leftLimit, rightLimit + 1)
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString());
 
-    public static Coupon create(Integer goodsNo, String serial){
-        return new Coupon(goodsNo, serial);
+        for (int i=0;i<4;i++){
+            generatedString.append(random.nextInt(10000));
+        }
+
+        return generatedString.toString();
+    }
+
+    public static Coupon create(Integer goodsNo){
+        return new Coupon(goodsNo, createSerial());
     }
 }
