@@ -3,6 +3,7 @@ server:
 
 spring:
   datasource:
+
     driver-class-name: org.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/demo
     username: demo
