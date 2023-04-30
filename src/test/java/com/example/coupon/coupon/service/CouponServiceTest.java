@@ -1,7 +1,8 @@
 package com.example.coupon.coupon.service;
 
 import org.junit.jupiter.api.BeforeEach;
-        import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
         import org.mockito.Mock;
         import org.mockito.MockitoAnnotations;
 
@@ -22,6 +23,7 @@ class CouponServiceTest {
     }
 
     @Test
+    @DisplayName("쿠폰번호 생성 문자4자리 + 숫자12자리")
     public void testRandomStringGeneration() {
         int leftLimit = 97;
         int rightLimit = 122;

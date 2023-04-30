@@ -1,5 +1,6 @@
 package com.example.coupon.coupon.controller;
 
+import com.example.coupon.coupon.dto.CouponRequest;
 import com.example.coupon.coupon.dto.CouponRequestDto;
 import com.example.coupon.coupon.service.CouponService;
 import lombok.AllArgsConstructor;
@@ -15,9 +16,9 @@ public class CouponController {
 
     private final CouponService couponService;
 
-    @PostMapping
-    public ResponseEntity createCoupon(@RequestBody CouponRequestDto couponRequestDto){
-        couponService.createCoupon(couponRequestDto);
+    @PostMapping("/coupon")
+    public ResponseEntity createCoupon(@RequestBody CouponRequest couponRequest){
+        couponService.createCoupon(couponRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
