@@ -33,10 +33,10 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(AuthenticationException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException e) {
-        return ResponseEntity.internalServerError()
-                .body(ErrorResponse.responseOf(ResponseCode.SERVER_ERROR, e.getMessage()));
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ErrorResponse.responseOf(ResponseCode.UNAUTHORIZED, e.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

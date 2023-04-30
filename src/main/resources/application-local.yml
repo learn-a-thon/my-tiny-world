@@ -12,7 +12,7 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 
 jwt:
   secret: aiQoVnMwIDHv7+PfR8LE9gSk1hjJfFiFZKj+szimCno=
