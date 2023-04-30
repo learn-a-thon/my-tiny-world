@@ -1,7 +1,6 @@
 package com.example.coupon.coupon.controller;
 
 import com.example.coupon.coupon.dto.CouponRequest;
-import com.example.coupon.coupon.dto.CouponRequestDto;
 import com.example.coupon.coupon.service.CouponService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

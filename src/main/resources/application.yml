@@ -3,16 +3,17 @@ server:
 
 spring:
   datasource:
-
-    driver-class-name: org.mysql.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/demo
     username: demo
     password: demo
-
-
     jpa:
       hibernate:
         ddl-auto: create
       properties:
         hibernate:
           format_sql: true
+
+slack:
+  token: xoxb-5176239689703-5184181764390-z7TJoPCI8kPN6upcN6uUHONo
+  channel: '#공부'
