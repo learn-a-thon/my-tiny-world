@@ -1,0 +1,14 @@
+POST http://localhost:8080/notify/test
+Content-Type: application/json
+
+{
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "New Paid Time Off request from <example.com|Fred Enriquez>\n\n<https://example.com|View request>"
+      }
+    }
+  ]
+}

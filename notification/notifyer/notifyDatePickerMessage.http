@@ -1,0 +1,72 @@
+POST http://localhost:8080/notify/test
+Content-Type: application/json
+
+{
+  "blocks": [
+    {
+      "type": "actions",
+      "block_id": "actionblock789",
+      "elements": [
+        {
+          "type": "datepicker",
+          "action_id": "datepicker123",
+          "initial_date": "1990-04-28",
+          "placeholder": {
+            "type": "plain_text",
+            "text": "Select a date"
+          }
+        },
+        {
+          "type": "overflow",
+          "options": [
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "*this is plain_text text*"
+              },
+              "value": "value-0"
+            },
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "*this is plain_text text*"
+              },
+              "value": "value-1"
+            },
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "*this is plain_text text*"
+              },
+              "value": "value-2"
+            },
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "*this is plain_text text*"
+              },
+              "value": "value-3"
+            },
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "*this is plain_text text*"
+              },
+              "value": "value-4"
+            }
+          ],
+          "action_id": "overflow"
+        },
+        {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me"
+          },
+          "value": "click_me_123",
+          "action_id": "button"
+        }
+      ]
+    }
+  ]
+}

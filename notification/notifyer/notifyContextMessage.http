@@ -1,0 +1,21 @@
+POST http://localhost:8080/notify/test
+Content-Type: application/json
+
+{
+  "blocks": [
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "image",
+          "image_url": "https://image.freepik.com/free-photo/red-drawing-pin_1156-445.jpg",
+          "alt_text": "images"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "Location: *Dogpatch*"
+        }
+      ]
+    }
+  ]
+}
