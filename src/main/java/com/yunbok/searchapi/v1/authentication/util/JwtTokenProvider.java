@@ -1,7 +1,7 @@
 package com.yunbok.searchapi.v1.authentication.util;
 
-import com.yunbok.searchapi.v1.authentication.dto.response.AccessTokenResponse;
-import com.yunbok.searchapi.v1.authentication.exception.AuthenticationException;
+import com.yunbok.searchapi.v1.authentication.vo.response.AccessTokenResponse;
+import com.yunbok.searchapi.v1.authentication.exception.ApiAuthenticationException;
 import com.yunbok.searchapi.v1.common.define.ResponseCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -27,7 +27,7 @@ public class JwtTokenProvider {
         return doGenerateToken(account, secretKey, expirationTime);
     }
 
-    public void validateToken(String token) throws AuthenticationException {
+    public void validateToken(String token) throws ApiAuthenticationException {
         try {
             Jws<Claims> claims = Jwts.parserBuilder()
                     .setSigningKey(getKey(secretKey))
@@ -38,7 +38,7 @@ public class JwtTokenProvider {
                 throw new JwtException("invalid access token");
             }
         } catch (JwtException e) {
-            throw new AuthenticationException("invalid access token", ResponseCode.INVALID_REQUEST);
+            throw new ApiAuthenticationException("invalid access token", ResponseCode.INVALID_REQUEST);
         }
     }
 
@@ -54,7 +54,7 @@ public class JwtTokenProvider {
                 .signWith(getKey(secretKey))
                 .compact();
 
-        return AccessTokenResponse.responseOf(jwtToken, expiration.getTime());
+        return AccessTokenResponse.generateTokenOf(jwtToken, expiration.getTime());
     }
 
     private Key getKey(String secretKey) {

@@ -1,6 +1,6 @@
 package com.yunbok.searchapi.v1.search.parse;
 
-import com.yunbok.searchapi.v1.search.entity.Book;
+import com.yunbok.searchapi.v1.search.domain.Book;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

@@ -1,8 +1,7 @@
 package com.yunbok.searchapi.v1.authentication.util;
 
-import com.yunbok.searchapi.v1.authentication.exception.AuthenticationException;
+import com.yunbok.searchapi.v1.authentication.exception.ApiAuthenticationException;
 import com.yunbok.searchapi.v1.common.define.ResponseCode;
-
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -31,7 +30,7 @@ public class ApiKeyUtil {
             }
             return hashBuilder.toString();
         } catch (NoSuchAlgorithmException e) {
-            throw new AuthenticationException(ResponseCode.SERVER_ERROR);
+            throw new ApiAuthenticationException(ResponseCode.SERVER_ERROR);
         }
     }
 }

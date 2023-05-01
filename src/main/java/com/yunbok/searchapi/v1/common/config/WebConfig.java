@@ -1,7 +1,7 @@
 package com.yunbok.searchapi.v1.common.config;
 
-import com.yunbok.searchapi.v1.authentication.util.JwtTokenProvider;
 import com.yunbok.searchapi.v1.common.interceptor.AccessTokenInterceptor;
+import com.yunbok.searchapi.v1.authentication.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

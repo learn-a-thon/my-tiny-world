@@ -1,7 +1,7 @@
 package com.yunbok.searchapi.v1.authentication.util;
 
 import com.yunbok.searchapi.v1.authentication.exception.ApiAuthenticationException;
-import com.yunbok.searchapi.v1.authentication.service.ApiKeyService;
+import com.yunbok.searchapi.v1.authentication.infrastructure.ApiKeyRepository;
 import com.yunbok.searchapi.v1.common.define.ResponseCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import java.util.Base64;
 @Component
 public class ApiKeyGenerator {
 
-    private final ApiKeyService apiKeyService;
+    private final ApiKeyRepository apiKeyRepository;
 
     private static final int API_KEY_LENGTH = 32;
     private static final String HASH_ALGORITHM = "SHA-256";
@@ -47,7 +47,7 @@ public class ApiKeyGenerator {
     }
 
     public String ensureUniqueApiKey(String apiKey) {
-        while (apiKeyService.isExistsApiKey(getHashedApiKey(apiKey))) {
+        while (apiKeyRepository.existsByApiKey(getHashedApiKey(apiKey))) {
             byte[] apiKeyBytes = new byte[API_KEY_LENGTH];
             SecureRandom random = new SecureRandom();
             random.nextBytes(apiKeyBytes);

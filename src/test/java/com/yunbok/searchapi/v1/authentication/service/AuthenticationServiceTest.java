@@ -1,16 +1,17 @@
 package com.yunbok.searchapi.v1.authentication.service;
 
-import com.yunbok.searchapi.v1.authentication.dto.request.AccessTokenRequest;
-import com.yunbok.searchapi.v1.authentication.dto.request.ApiKeyRequest;
-import com.yunbok.searchapi.v1.authentication.dto.response.AccessTokenResponse;
-import com.yunbok.searchapi.v1.authentication.dto.response.ApiKeyResponse;
-import com.yunbok.searchapi.v1.authentication.entity.ApiKey;
-import com.yunbok.searchapi.v1.authentication.repository.ApiKeyRepository;
+import com.yunbok.searchapi.v1.authentication.application.AuthenticationService;
+import com.yunbok.searchapi.v1.authentication.vo.request.AccessTokenRequest;
+import com.yunbok.searchapi.v1.authentication.vo.request.ApiKeyRequest;
+import com.yunbok.searchapi.v1.authentication.vo.response.AccessTokenResponse;
+import com.yunbok.searchapi.v1.authentication.vo.response.ApiKeyResponse;
+import com.yunbok.searchapi.v1.authentication.domain.ApiKey;
+import com.yunbok.searchapi.v1.authentication.infrastructure.ApiKeyRepository;
+import com.yunbok.searchapi.v1.authentication.domain.User;
 import com.yunbok.searchapi.v1.authentication.util.ApiKeyGenerator;
-import com.yunbok.searchapi.v1.authentication.entity.User;
-import com.yunbok.searchapi.v1.authentication.util.JwtTokenProvider;
-import com.yunbok.searchapi.v1.common.repository.UserRepository;
 import com.yunbok.searchapi.v1.authentication.util.ApiKeyUtil;
+import com.yunbok.searchapi.v1.authentication.util.JwtTokenProvider;
+import com.yunbok.searchapi.v1.authentication.infrastructure.UserRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -54,20 +55,20 @@ public class AuthenticationServiceTest {
         String account = "testAccount";
         String password = "testPassword";
         String apiKey = "testApiKey";
-        User user = new User(1L, account, password);
-        ApiKeyRequest request = ApiKeyRequest.requestOf(account, password);
+        User user = new User(account, password);
+        ApiKeyRequest request = new ApiKeyRequest(account, password);
 
         // when
         when(userRepository.findByAccountAndPassword(account, password)).thenReturn(Optional.of(user));
         when(apiKeyGenerator.generateApiKey()).thenReturn(apiKey);
         ApiKeyResponse response = authenticationService.getApiKey(request);
-        verify(apiKeyRepository).save(refEq(ApiKey.save(user, apiKeyGenerator.getHashedApiKey(apiKey))));
+        verify(apiKeyRepository).save(refEq(new ApiKey(apiKeyGenerator.getHashedApiKey(apiKey))));
 
         when(userRepository.findByAccountAndPassword(account, password)).thenReturn(Optional.of(user));
         when(ApiKeyUtil.generateApiKey()).thenReturn(apiKey);
 
         // then
-        assertEquals(apiKey, response.getApiKey());
+        assertEquals(apiKey, response.apikey());
     }
 
     @Test
@@ -76,18 +77,17 @@ public class AuthenticationServiceTest {
         String apiKey = "testApiKey";
         String account = "testAccount";
         String password = "password";
-        AccessTokenRequest request = AccessTokenRequest.requestOf(account);
-        User user = new User(1L, account, password);
-        ApiKey apiKeyEntity = ApiKey.save(user, apiKey);
-        AccessTokenResponse expectedResponse = AccessTokenResponse.responseOf("testToken", 100000L);
+        AccessTokenRequest request = new AccessTokenRequest(account);
+        User user = new User(account, password);
+        AccessTokenResponse expectedResponse = AccessTokenResponse.generateTokenOf("testToken", 100000L);
 
         // when
-        when(apiKeyRepository.findByApiKey(any())).thenReturn(Optional.of(apiKeyEntity));
+        when(userRepository.findByApiKey(any())).thenReturn(Optional.of(user));
         when(jwtTokenProvider.generateJwtToken(any())).thenReturn(expectedResponse);
         AccessTokenResponse actualResponse = authenticationService.getAccessToken(apiKey, request);
 
         // then
         assertNotNull(actualResponse);
-        assertEquals(actualResponse.getAccessToken(), expectedResponse.getAccessToken());
+        assertEquals(actualResponse.accessToken(), expectedResponse.accessToken());
     }
 }

@@ -1,6 +1,5 @@
 package com.yunbok.searchapi.v1.common.interceptor;
 
-import com.yunbok.searchapi.v1.authentication.exception.AuthenticationException;
 import com.yunbok.searchapi.v1.authentication.util.JwtTokenProvider;
 import com.yunbok.searchapi.v1.common.define.ResponseCode;
 import jakarta.servlet.http.HttpServletRequest;
