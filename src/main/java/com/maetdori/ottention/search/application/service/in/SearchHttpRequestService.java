@@ -19,7 +19,7 @@ public class SearchHttpRequestService implements SearchHttpRequestUseCase {
                 .uri(uriBuilder -> uriBuilder
                         .path(SEARCH_URI + uri)
                         .queryParams(queryParams.getParams())
-                .build())
+                        .build())
                 .retrieve();
     }
 
