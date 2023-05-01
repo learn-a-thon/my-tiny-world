@@ -1,6 +1,7 @@
-package com.maetdori.ottention.search.adapter.web.dto;
+package com.maetdori.ottention.search.adapter.web.dto.movie;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.maetdori.ottention.search.adapter.web.dto.SearchResponse;
 import com.maetdori.ottention.search.domain.Movie;
 import lombok.NoArgsConstructor;
 

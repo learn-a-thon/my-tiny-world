@@ -1,5 +1,6 @@
-package com.maetdori.ottention.search.adapter.web.dto;
+package com.maetdori.ottention.search.adapter.web.dto.movie;
 
+import com.maetdori.ottention.search.adapter.web.dto.SearchRequest;
 import lombok.Getter;
 
 @Getter
