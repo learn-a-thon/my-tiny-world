@@ -4,5 +4,4 @@ import java.util.Optional;
 
 public interface AccountRepository {
     Account save(Account account);
-    Optional<Account> findByAccountNumber(AccountNumber accountNumber);
 }

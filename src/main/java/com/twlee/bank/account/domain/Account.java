@@ -76,7 +76,8 @@ public class Account extends BaseTimeEntity {
     }
 
     public BigDecimal getCash() {
-        return cash.getAmount();
+        int amount = cash.getAmount().intValue();
+        return BigDecimal.valueOf(amount);
     }
 
     public List<AccountDetail> getAccountDetails() {
