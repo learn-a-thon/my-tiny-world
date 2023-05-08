@@ -20,7 +20,7 @@ public class NotifyController {
     private final SlackAlarmService slackAlarmService;
 
     @PostMapping("/test")
-    public ResponseEntity<NotifyResponse> testNotify(@RequestBody NotifyRequest notifyRequest) {
+    public ResponseEntity<NotifyResponse> notifyBasicMessage(@RequestBody NotifyRequest notifyRequest) {
         slackAlarmService.send(notifyRequest);
         return ResponseEntity.ok(NotifyResponse.of(notifyRequest.text()));
     }

@@ -18,7 +18,7 @@ public class SlackAlarmService extends AbstractNotifyService {
     @Transactional
     public void send(NotifyRequest notifyRequest) {
         notificationService.saveNotification(Notification.defaultOf(notifyRequest.text()));
-        this.send(NotifyRequestEvent.of(notifyRequest.text(), notifyProperties.getSlack().getPath()));
+        this.send(NotifyRequestEvent.of(notifyRequest, notifyProperties.getSlack().getPath()));
     }
 
 }

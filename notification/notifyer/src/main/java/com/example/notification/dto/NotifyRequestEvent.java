@@ -1,11 +1,13 @@
 package com.example.notification.dto;
 
-import com.example.notification.define.slack.IconEmoji;
+import com.example.notification.dto.slack.blocks.Block;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+
+import java.util.List;
 
 @Getter
 @ToString
@@ -18,19 +20,22 @@ public class NotifyRequestEvent {
     private String iconEmoji;
     private String username;
 
+    private List<Block> blocks;
+
     @Builder
-    public NotifyRequestEvent(String text, String uri, String iconEmoji, String username) {
+    public NotifyRequestEvent(String text, String uri, String iconEmoji, String username, List<Block> blocks) {
         this.text = text;
         this.uri = uri;
         this.iconEmoji = iconEmoji;
         this.username = username;
+        this.blocks = blocks;
     }
 
-    public static NotifyRequestEvent of(String text, String uri) {
+    public static NotifyRequestEvent of(NotifyRequest notifyRequest, String uri) {
         return NotifyRequestEvent.builder()
-                .text(text)
+                .text(notifyRequest.text())
+                .blocks(notifyRequest.blocks())
                 .uri(uri)
-                .iconEmoji(IconEmoji.PURPLE_HEART.getCode())
                 .username(DEFAULT_USERNAME)
                 .build();
     }
