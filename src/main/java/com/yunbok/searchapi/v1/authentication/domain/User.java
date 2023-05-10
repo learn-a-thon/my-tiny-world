@@ -1,6 +1,7 @@
 package com.yunbok.searchapi.v1.authentication.domain;
 
-import com.yunbok.searchapi.v1.authentication.vo.response.AccessTokenResponse;
+import com.yunbok.searchapi.v1.authentication.domain.vo.JwtToken;
+import com.yunbok.searchapi.v1.authentication.presentation.response.AccessTokenResponse;
 import com.yunbok.searchapi.v1.authentication.exception.ApiAuthenticationException;
 import com.yunbok.searchapi.v1.authentication.infrastructure.ApiKeyRepository;
 import com.yunbok.searchapi.v1.authentication.util.JwtTokenProvider;
@@ -24,8 +25,7 @@ public class User extends BaseEntity {
 
     private String password;
 
-    @OneToOne
-    @JoinColumn(name = "id", nullable = false)
+    @Embedded
     private ApiKey apiKey;
 
     public User(String account, String password) {
@@ -37,13 +37,5 @@ public class User extends BaseEntity {
         ApiKey apiKey = ApiKey.save(key);
         apiKeyRepository.save(apiKey);
         this.apiKey = apiKey;
-    }
-
-    public AccessTokenResponse generateAccessToken(String account, JwtTokenProvider jwtTokenProvider) {
-        if(!this.account.equals(account)) {
-            throw new ApiAuthenticationException("invalid account", ResponseCode.UNAUTHORIZED);
-        }
-
-        return jwtTokenProvider.generateJwtToken(this.account);
     }
 }

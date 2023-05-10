@@ -1,9 +1,9 @@
 package com.yunbok.searchapi.v1.authentication.presentation;
 
-import com.yunbok.searchapi.v1.authentication.vo.request.AccessTokenRequest;
-import com.yunbok.searchapi.v1.authentication.vo.request.ApiKeyRequest;
-import com.yunbok.searchapi.v1.authentication.vo.response.AccessTokenResponse;
-import com.yunbok.searchapi.v1.authentication.vo.response.ApiKeyResponse;
+import com.yunbok.searchapi.v1.authentication.presentation.request.AccessTokenRequest;
+import com.yunbok.searchapi.v1.authentication.presentation.request.ApiKeyRequest;
+import com.yunbok.searchapi.v1.authentication.presentation.response.AccessTokenResponse;
+import com.yunbok.searchapi.v1.authentication.presentation.response.ApiKeyResponse;
 import com.yunbok.searchapi.v1.authentication.application.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,6 @@ public class AuthenticationController {
     @PostMapping("/access-token")
     public ResponseEntity<AccessTokenResponse> getAccessToken(@RequestHeader("Authorization") String apiKey,
                                                               @RequestBody @Valid AccessTokenRequest accessTokenRequest) {
-        return ResponseEntity.ok(
-                authenticationService.getAccessToken(apiKey, accessTokenRequest));
+        return ResponseEntity.ok(authenticationService.getAccessToken(apiKey, accessTokenRequest));
     }
 }

@@ -1,10 +1,11 @@
 package com.yunbok.searchapi.v1.authentication.service;
 
 import com.yunbok.searchapi.v1.authentication.application.AuthenticationService;
-import com.yunbok.searchapi.v1.authentication.vo.request.AccessTokenRequest;
-import com.yunbok.searchapi.v1.authentication.vo.request.ApiKeyRequest;
-import com.yunbok.searchapi.v1.authentication.vo.response.AccessTokenResponse;
-import com.yunbok.searchapi.v1.authentication.vo.response.ApiKeyResponse;
+import com.yunbok.searchapi.v1.authentication.domain.vo.JwtToken;
+import com.yunbok.searchapi.v1.authentication.presentation.request.AccessTokenRequest;
+import com.yunbok.searchapi.v1.authentication.presentation.request.ApiKeyRequest;
+import com.yunbok.searchapi.v1.authentication.presentation.response.AccessTokenResponse;
+import com.yunbok.searchapi.v1.authentication.presentation.response.ApiKeyResponse;
 import com.yunbok.searchapi.v1.authentication.domain.ApiKey;
 import com.yunbok.searchapi.v1.authentication.infrastructure.ApiKeyRepository;
 import com.yunbok.searchapi.v1.authentication.domain.User;
@@ -12,6 +13,7 @@ import com.yunbok.searchapi.v1.authentication.util.ApiKeyGenerator;
 import com.yunbok.searchapi.v1.authentication.util.ApiKeyUtil;
 import com.yunbok.searchapi.v1.authentication.util.JwtTokenProvider;
 import com.yunbok.searchapi.v1.authentication.infrastructure.UserRepository;
+import com.yunbok.searchapi.v1.common.define.ResponseCode;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -20,6 +22,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -62,7 +65,7 @@ public class AuthenticationServiceTest {
         when(userRepository.findByAccountAndPassword(account, password)).thenReturn(Optional.of(user));
         when(apiKeyGenerator.generateApiKey()).thenReturn(apiKey);
         ApiKeyResponse response = authenticationService.getApiKey(request);
-        verify(apiKeyRepository).save(refEq(new ApiKey(apiKeyGenerator.getHashedApiKey(apiKey))));
+        verify(apiKeyRepository).save(refEq(new ApiKey(apiKeyGenerator.getHashedApiKey(apiKey), LocalDateTime.now())));
 
         when(userRepository.findByAccountAndPassword(account, password)).thenReturn(Optional.of(user));
         when(ApiKeyUtil.generateApiKey()).thenReturn(apiKey);
@@ -79,15 +82,18 @@ public class AuthenticationServiceTest {
         String password = "password";
         AccessTokenRequest request = new AccessTokenRequest(account);
         User user = new User(account, password);
-        AccessTokenResponse expectedResponse = AccessTokenResponse.generateTokenOf("testToken", 100000L);
+        JwtToken expectedJwtToken = new JwtToken(
+                "accessToken",
+                100000L,
+                "Bearer");
 
         // when
         when(userRepository.findByApiKey(any())).thenReturn(Optional.of(user));
-        when(jwtTokenProvider.generateJwtToken(any())).thenReturn(expectedResponse);
+        when(jwtTokenProvider.generateJwtToken(any())).thenReturn(expectedJwtToken);
         AccessTokenResponse actualResponse = authenticationService.getAccessToken(apiKey, request);
 
         // then
         assertNotNull(actualResponse);
-        assertEquals(actualResponse.accessToken(), expectedResponse.accessToken());
+        assertEquals(actualResponse.accessToken(), expectedJwtToken.accessToken());
     }
 }

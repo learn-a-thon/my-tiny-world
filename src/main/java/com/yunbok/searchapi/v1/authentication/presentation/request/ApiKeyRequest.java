@@ -1,4 +1,4 @@
-package com.yunbok.searchapi.v1.authentication.vo.request;
+package com.yunbok.searchapi.v1.authentication.presentation.request;
 
 import jakarta.validation.constraints.NotBlank;
 

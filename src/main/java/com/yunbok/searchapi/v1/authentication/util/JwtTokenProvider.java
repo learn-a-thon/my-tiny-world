@@ -1,6 +1,7 @@
 package com.yunbok.searchapi.v1.authentication.util;
 
-import com.yunbok.searchapi.v1.authentication.vo.response.AccessTokenResponse;
+import com.yunbok.searchapi.v1.authentication.domain.vo.JwtToken;
+import com.yunbok.searchapi.v1.authentication.presentation.response.AccessTokenResponse;
 import com.yunbok.searchapi.v1.authentication.exception.ApiAuthenticationException;
 import com.yunbok.searchapi.v1.common.define.ResponseCode;
 import io.jsonwebtoken.Claims;
@@ -23,7 +24,7 @@ public class JwtTokenProvider {
     @Value("${jwt.expiration}")
     private long expirationTime;
 
-    public AccessTokenResponse generateJwtToken(String account) {
+    public JwtToken generateJwtToken(String account) {
         return doGenerateToken(account, secretKey, expirationTime);
     }
 
@@ -42,7 +43,7 @@ public class JwtTokenProvider {
         }
     }
 
-    private AccessTokenResponse doGenerateToken(String subject, String secretKey, long expirationTime) {
+    private JwtToken doGenerateToken(String subject, String secretKey, long expirationTime) {
         long now = System.currentTimeMillis();
         Date issuedAt = new Date(now);
         Date expiration = new Date(now + expirationTime * 1000);
@@ -54,7 +55,7 @@ public class JwtTokenProvider {
                 .signWith(getKey(secretKey))
                 .compact();
 
-        return AccessTokenResponse.generateTokenOf(jwtToken, expiration.getTime());
+        return JwtToken.generateOf(jwtToken, expiration.getTime());
     }
 
     private Key getKey(String secretKey) {

@@ -1,29 +1,29 @@
 package com.yunbok.searchapi.v1.authentication.domain;
 
 
-import com.yunbok.searchapi.v1.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
+@Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Entity
-public class ApiKey extends BaseEntity {
+public class ApiKey {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String key;
 
-    public ApiKey(String key) {
+    private LocalDateTime publishDate;
+
+    public ApiKey(String key, LocalDateTime publishDate) {
         this.key = key;
+        this.publishDate = publishDate;
     }
 
     public static ApiKey save(String key) {
-        return new ApiKey(key);
+        return new ApiKey(key, LocalDateTime.now());
     }
 }

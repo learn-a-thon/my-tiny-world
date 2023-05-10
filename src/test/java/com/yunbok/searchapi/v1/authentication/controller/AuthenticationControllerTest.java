@@ -1,12 +1,13 @@
 package com.yunbok.searchapi.v1.authentication.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yunbok.searchapi.v1.authentication.vo.response.AccessTokenResponse;
+import com.yunbok.searchapi.v1.authentication.presentation.response.AccessTokenResponse;
 import com.yunbok.searchapi.v1.authentication.presentation.AuthenticationController;
-import com.yunbok.searchapi.v1.authentication.vo.request.AccessTokenRequest;
-import com.yunbok.searchapi.v1.authentication.vo.request.ApiKeyRequest;
-import com.yunbok.searchapi.v1.authentication.vo.response.ApiKeyResponse;
+import com.yunbok.searchapi.v1.authentication.presentation.request.AccessTokenRequest;
+import com.yunbok.searchapi.v1.authentication.presentation.request.ApiKeyRequest;
+import com.yunbok.searchapi.v1.authentication.presentation.response.ApiKeyResponse;
 import com.yunbok.searchapi.v1.authentication.application.AuthenticationService;
+import com.yunbok.searchapi.v1.common.define.ResponseCode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -46,7 +47,11 @@ public class AuthenticationControllerTest {
         String apiKey = "testApiKey";
 
         ApiKeyRequest apiKeyRequest = new ApiKeyRequest(account, password);
-        ApiKeyResponse apiKeyResponse = ApiKeyResponse.successOf(apiKey);
+        ApiKeyResponse apiKeyResponse = new ApiKeyResponse(
+                ResponseCode.SUCCESS.getCode(),
+                ResponseCode.SUCCESS.getMessage(),
+                apiKey);
+
 
         when(authenticationService.getApiKey(refEq(apiKeyRequest))).thenReturn(apiKeyResponse);
 
@@ -68,9 +73,12 @@ public class AuthenticationControllerTest {
     public void testGetAccessToken() throws Exception {
         // given
         AccessTokenRequest request = new AccessTokenRequest("testAccount");
-        AccessTokenResponse response = AccessTokenResponse.generateTokenOf(
+        AccessTokenResponse response = new AccessTokenResponse(
+                ResponseCode.SUCCESS.getCode(),
+                ResponseCode.SUCCESS.getMessage(),
                 "accessToken",
-                100000L);
+                100000L,
+                "Bearer");
 
         when(authenticationService.getAccessToken(any(), any())).thenReturn(response);
 
