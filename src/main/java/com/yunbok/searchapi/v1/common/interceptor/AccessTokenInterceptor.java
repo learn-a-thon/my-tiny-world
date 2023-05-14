@@ -1,5 +1,6 @@
 package com.yunbok.searchapi.v1.common.interceptor;
 
+import com.yunbok.searchapi.v1.authentication.exception.ApiAuthenticationException;
 import com.yunbok.searchapi.v1.authentication.util.JwtTokenProvider;
 import com.yunbok.searchapi.v1.common.define.ResponseCode;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,11 +18,11 @@ public class AccessTokenInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-            throws Exception {
+            throws ApiAuthenticationException {
         // Authorization 헤더에서 JWT 토큰 추출
         String authHeader = request.getHeader(AUTH_HEADER);
         if (authHeader == null || !authHeader.startsWith(TOKEN_PREFIX)) {
-            throw new AuthenticationException("invalid access token", ResponseCode.INVALID_REQUEST);
+            throw new ApiAuthenticationException("invalid access token", ResponseCode.INVALID_REQUEST);
         }
 
         String token = authHeader.replace(TOKEN_PREFIX, "");

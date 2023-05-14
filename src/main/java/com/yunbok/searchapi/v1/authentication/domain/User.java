@@ -1,11 +1,6 @@
 package com.yunbok.searchapi.v1.authentication.domain;
 
-import com.yunbok.searchapi.v1.authentication.domain.vo.JwtToken;
-import com.yunbok.searchapi.v1.authentication.presentation.response.AccessTokenResponse;
-import com.yunbok.searchapi.v1.authentication.exception.ApiAuthenticationException;
-import com.yunbok.searchapi.v1.authentication.infrastructure.ApiKeyRepository;
-import com.yunbok.searchapi.v1.authentication.util.JwtTokenProvider;
-import com.yunbok.searchapi.v1.common.define.ResponseCode;
+import com.yunbok.searchapi.v1.authentication.infrastructure.UserRepository;
 import com.yunbok.searchapi.v1.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -33,9 +28,8 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
-    public void generateApiKey(String key, ApiKeyRepository apiKeyRepository) {
-        ApiKey apiKey = ApiKey.save(key);
-        apiKeyRepository.save(apiKey);
-        this.apiKey = apiKey;
+    public void generateApiKey(String key, UserRepository userRepository) {
+        this.apiKey = ApiKey.save(key);
+        userRepository.save(this);
     }
 }

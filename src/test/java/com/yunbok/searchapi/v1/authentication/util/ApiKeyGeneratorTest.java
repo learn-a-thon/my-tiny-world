@@ -1,5 +1,7 @@
 package com.yunbok.searchapi.v1.authentication.util;
 
+import com.yunbok.searchapi.v1.authentication.application.ApikeyService;
+import com.yunbok.searchapi.v1.authentication.infrastructure.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,7 +20,7 @@ class ApiKeyGeneratorTest {
 
 
     @Mock
-    private ApiKeyService apiKeyService;
+    private ApikeyService apikeyService;
 
     @InjectMocks
     private ApiKeyGenerator apiKeyGenerator;
@@ -26,7 +28,7 @@ class ApiKeyGeneratorTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        apiKeyGenerator = new ApiKeyGenerator(apiKeyService);
+        apiKeyGenerator = new ApiKeyGenerator(apikeyService);
     }
 
     /**
@@ -39,7 +41,7 @@ class ApiKeyGeneratorTest {
         String apiKey = "abcdefghijklmnopqrstuvwxzy0123456789";
 
         // when
-        when(apiKeyService.isExistsApiKey(apiKeyGenerator.getHashedApiKey(apiKey))).thenReturn(true);
+        when(apikeyService.isExists(apiKeyGenerator.getHashedApiKey(apiKey))).thenReturn(true);
         String uniqueApiKey = apiKeyGenerator.ensureUniqueApiKey(apiKey);
 
         // then

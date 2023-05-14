@@ -19,7 +19,7 @@ public class SearchController {
     private final SearchService searchService;
 
     @GetMapping
-    public ResponseEntity<List<BookResponse>> searchWeb(SearchRequest searchRequest) {
+    public ResponseEntity<List<BookResponse>> searchBooks(SearchRequest searchRequest) {
         List<BookResponse> result = searchService.search(searchRequest);
 
         return ResponseEntity.ok(result);
