@@ -1,7 +1,6 @@
 package com.yunbok.searchapi.v1.common.exception;
 
 import com.yunbok.searchapi.v1.authentication.exception.ApiAuthenticationException;
-import com.yunbok.searchapi.v1.authentication.exception.AuthenticationException;
 import com.yunbok.searchapi.v1.common.define.ResponseCode;
 import com.yunbok.searchapi.v1.common.dto.ErrorResponse;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -32,9 +31,9 @@ public class ApiExceptionHandler {
                 .body(ErrorResponse.responseOf(ResponseCode.INVALID_REQUEST));
     }
 
-    @ExceptionHandler(AuthenticationException.class)
+    @ExceptionHandler(ApiAuthenticationException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException e) {
+    public ResponseEntity<ErrorResponse> handleAuthenticationException(ApiAuthenticationException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(ErrorResponse.responseOf(ResponseCode.UNAUTHORIZED, e.getMessage()));
     }

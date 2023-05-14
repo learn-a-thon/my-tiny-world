@@ -1,6 +1,7 @@
 package com.yunbok.searchapi.v1.authentication.util;
 
-import com.yunbok.searchapi.v1.authentication.dto.response.AccessTokenResponse;
+import com.yunbok.searchapi.v1.authentication.domain.vo.JwtToken;
+import com.yunbok.searchapi.v1.authentication.presentation.response.AccessTokenResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -49,15 +50,15 @@ public class JwtTokenProviderTest {
         String account = "test123";
 
         // when
-        AccessTokenResponse response = jwtTokenProvider.generateJwtToken(account);
+        JwtToken jwtToken = jwtTokenProvider.generateJwtToken(account);
 
         // then
-        assertNotNull(response);
-        assertNotNull(response.getAccessToken());
+        assertNotNull(jwtToken);
+        assertNotNull(jwtToken.accessToken());
         Jws<Claims> claimsJws = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
-                .parseClaimsJws(response.getAccessToken());
+                .parseClaimsJws(jwtToken.accessToken());
         assertEquals(account, claimsJws.getBody().getSubject());
     }
 }

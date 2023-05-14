@@ -1,7 +1,7 @@
 package com.yunbok.searchapi.v1.search.parse;
 
-import com.yunbok.searchapi.v1.search.entity.Book;
-import com.yunbok.searchapi.v1.search.repository.BookRepository;
+import com.yunbok.searchapi.v1.search.domain.Book;
+import com.yunbok.searchapi.v1.search.infrastructure.BookRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

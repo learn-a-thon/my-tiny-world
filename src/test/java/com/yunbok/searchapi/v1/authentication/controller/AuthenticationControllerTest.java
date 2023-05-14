@@ -1,12 +1,12 @@
 package com.yunbok.searchapi.v1.authentication.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yunbok.searchapi.v1.authentication.dto.request.AccessTokenRequest;
-import com.yunbok.searchapi.v1.authentication.dto.request.ApiKeyRequest;
-import com.yunbok.searchapi.v1.authentication.dto.response.AccessTokenResponse;
-import com.yunbok.searchapi.v1.authentication.dto.response.ApiKeyResponse;
-import com.yunbok.searchapi.v1.authentication.exception.ApiAuthenticationException;
-import com.yunbok.searchapi.v1.authentication.service.AuthenticationService;
+import com.yunbok.searchapi.v1.authentication.presentation.response.AccessTokenResponse;
+import com.yunbok.searchapi.v1.authentication.presentation.AuthenticationController;
+import com.yunbok.searchapi.v1.authentication.presentation.request.AccessTokenRequest;
+import com.yunbok.searchapi.v1.authentication.presentation.request.ApiKeyRequest;
+import com.yunbok.searchapi.v1.authentication.presentation.response.ApiKeyResponse;
+import com.yunbok.searchapi.v1.authentication.application.AuthenticationService;
 import com.yunbok.searchapi.v1.common.define.ResponseCode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +18,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.refEq;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(AuthenticationController.class)
@@ -50,8 +46,12 @@ public class AuthenticationControllerTest {
         String password = "testPassword";
         String apiKey = "testApiKey";
 
-        ApiKeyRequest apiKeyRequest = ApiKeyRequest.requestOf(account, password);
-        ApiKeyResponse apiKeyResponse = ApiKeyResponse.successOf(apiKey);
+        ApiKeyRequest apiKeyRequest = new ApiKeyRequest(account, password);
+        ApiKeyResponse apiKeyResponse = new ApiKeyResponse(
+                ResponseCode.SUCCESS.getCode(),
+                ResponseCode.SUCCESS.getMessage(),
+                apiKey);
+
 
         when(authenticationService.getApiKey(refEq(apiKeyRequest))).thenReturn(apiKeyResponse);
 
@@ -66,14 +66,19 @@ public class AuthenticationControllerTest {
         String responseContent = mvcResult.getResponse().getContentAsString();
         ApiKeyResponse responseDto = new ObjectMapper().readValue(responseContent, ApiKeyResponse.class);
 
-        assertEquals(apiKeyResponse.getApiKey(), responseDto.getApiKey());
+        assertEquals(apiKeyResponse.apikey(), responseDto.apikey());
     }
 
     @Test
     public void testGetAccessToken() throws Exception {
         // given
-        AccessTokenRequest request = AccessTokenRequest.requestOf("testAccount");
-        AccessTokenResponse response = AccessTokenResponse.responseOf("accessToken", 100000L);
+        AccessTokenRequest request = new AccessTokenRequest("testAccount");
+        AccessTokenResponse response = new AccessTokenResponse(
+                ResponseCode.SUCCESS.getCode(),
+                ResponseCode.SUCCESS.getMessage(),
+                "accessToken",
+                100000L,
+                "Bearer");
 
         when(authenticationService.getAccessToken(any(), any())).thenReturn(response);
 
