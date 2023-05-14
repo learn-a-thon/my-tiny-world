@@ -1,7 +1,9 @@
 package com.twlee.bank.account.domain;
 
+import com.twlee.bank.account.event.AccountChangedEvent;
 import com.twlee.bank.account.exception.AccountException;
 import com.twlee.bank.common.domain.BaseTimeEntity;
+import com.twlee.bank.common.event.Events;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -48,6 +50,7 @@ public class Account extends BaseTimeEntity {
         Cash depositCash = new Cash(amount);
         this.cash = this.cash.add(depositCash);
         this.accountDetails.add(AccountDetail.createDeposit(amount, message));
+        Events.raise(new AccountChangedEvent(cash.subtract(depositCash), cash, TransactionType.DEPOSIT));
     }
 
     public void withdraw(BigDecimal amount) {
@@ -61,6 +64,7 @@ public class Account extends BaseTimeEntity {
         }
         this.cash = this.cash.subtract(withdrawalCash);
         this.accountDetails.add(AccountDetail.createWithdraw(amount, message));
+        Events.raise(new AccountChangedEvent(cash.add(withdrawalCash), cash, TransactionType.WITHDRAW));
     }
 
     public void delete() {
