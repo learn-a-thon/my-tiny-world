@@ -1,6 +1,5 @@
 package com.yunbok.searchapi.v1.authentication.presentation;
 
-import com.yunbok.searchapi.v1.authentication.presentation.request.AccessTokenRequest;
 import com.yunbok.searchapi.v1.authentication.presentation.request.ApiKeyRequest;
 import com.yunbok.searchapi.v1.authentication.presentation.response.AccessTokenResponse;
 import com.yunbok.searchapi.v1.authentication.presentation.response.ApiKeyResponse;
@@ -32,8 +31,7 @@ public class AuthenticationController {
      * @param accessTokenRequest
      */
     @PostMapping("/access-token")
-    public ResponseEntity<AccessTokenResponse> getAccessToken(@RequestHeader("Authorization") String apiKey,
-                                                              @RequestBody @Valid AccessTokenRequest accessTokenRequest) {
-        return ResponseEntity.ok(authenticationService.getAccessToken(apiKey, accessTokenRequest));
+    public ResponseEntity<AccessTokenResponse> getAccessToken(@RequestHeader("Authorization") String apiKey) {
+        return ResponseEntity.ok(authenticationService.getAccessToken(apiKey));
     }
 }

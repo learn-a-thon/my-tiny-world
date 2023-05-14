@@ -19,7 +19,8 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ErrorResponse> handleUnexpectedError() {
+    public ResponseEntity<ErrorResponse> handleUnexpectedError(Exception e) {
+        e.printStackTrace();
         return ResponseEntity.internalServerError()
                 .body(ErrorResponse.responseOf(ResponseCode.SERVER_ERROR));
     }
@@ -27,8 +28,16 @@ public class ApiExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException e) {
+        e.printStackTrace();
         return ResponseEntity.internalServerError()
                 .body(ErrorResponse.responseOf(ResponseCode.INVALID_REQUEST));
+    }
+
+    @ExceptionHandler(ApiClientException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleApiClientException(ApiClientException e) {
+        return ResponseEntity.internalServerError()
+                .body(ErrorResponse.responseOf(ResponseCode.INVALID_REQUEST, e.getMessage()));
     }
 
     @ExceptionHandler(ApiAuthenticationException.class)

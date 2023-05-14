@@ -3,7 +3,6 @@ package com.yunbok.searchapi.v1.authentication.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yunbok.searchapi.v1.authentication.presentation.response.AccessTokenResponse;
 import com.yunbok.searchapi.v1.authentication.presentation.AuthenticationController;
-import com.yunbok.searchapi.v1.authentication.presentation.request.AccessTokenRequest;
 import com.yunbok.searchapi.v1.authentication.presentation.request.ApiKeyRequest;
 import com.yunbok.searchapi.v1.authentication.presentation.response.ApiKeyResponse;
 import com.yunbok.searchapi.v1.authentication.application.AuthenticationService;
@@ -72,7 +71,6 @@ public class AuthenticationControllerTest {
     @Test
     public void testGetAccessToken() throws Exception {
         // given
-        AccessTokenRequest request = new AccessTokenRequest("testAccount");
         AccessTokenResponse response = new AccessTokenResponse(
                 ResponseCode.SUCCESS.getCode(),
                 ResponseCode.SUCCESS.getMessage(),
@@ -80,13 +78,11 @@ public class AuthenticationControllerTest {
                 100000L,
                 "Bearer");
 
-        when(authenticationService.getAccessToken(any(), any())).thenReturn(response);
+        when(authenticationService.getAccessToken(any())).thenReturn(response);
 
         // when
         RequestBuilder requestBuilder = post("/v1/authentication/access-token")
                 .header("Authorization", "apiKey")
-                .content(objectMapper.writeValueAsString(request))
-                .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
 
         // then
